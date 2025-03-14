@@ -16,6 +16,15 @@ linters:
     - unused
     - gosec
     - revive
+    - errcheck
+
+linters-settings:
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+  gosec:
+    excludes:
+      - G306  # exclude file permission rule
 
 issues:
   exclude-rules:
