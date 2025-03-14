@@ -1,0 +1,27 @@
+---
+
+run:
+  skip-dirs:
+    - ../../go/pkg/mod
+  skip-files:
+    - ".*\\.pb\\.go$"
+    - ".*\\.gen\\.go$"
+
+linters:
+  enable:
+    - gofmt
+    - govet
+    - gosimple
+    - staticcheck
+    - unused
+    - gosec
+    - revive
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+
+output:
+  format: colored-line-number
