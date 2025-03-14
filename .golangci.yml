@@ -1,11 +1,15 @@
 ---
 
-run:
-  skip-dirs:
+issues:
+  exclude-dirs:
     - ../../go/pkg/mod
-  skip-files:
+  exclude-files:
     - ".*\\.pb\\.go$"
     - ".*\\.gen\\.go$"
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
 
 linters:
   enable:
@@ -25,12 +29,3 @@ linters-settings:
   gosec:
     excludes:
       - G306  # exclude file permission rule
-
-issues:
-  exclude-rules:
-    - path: _test\.go
-      linters:
-        - gosec
-
-output:
-  format: colored-line-number
