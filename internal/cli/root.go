@@ -26,11 +26,12 @@ var ValidLogLevels = map[string]bool{
 }
 
 var ValidProviders = map[string]bool{
-	"aws":           true,
-	"azure":         true,
-	"google-cloud":  true,
-	"digital-ocean": true,
-	"docker":        true,
+	"aws":            true,
+	"azure":          true,
+	"google-cloud":   true,
+	"digital-ocean":  true,
+	"docker":         true,
+	"docker-compose": true,
 }
 
 func init() {
