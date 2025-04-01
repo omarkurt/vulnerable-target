@@ -1,6 +1,7 @@
 package dockercompose
 
 import (
+	"fmt"
 	"os"
 	"os/exec"
 
@@ -20,7 +21,7 @@ func Run() {
 		log.Fatal().Msgf("%v", err)
 	}
 
-	upCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", "vt-compose", "up", "-d")
+	upCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "up", "-d")
 	upCmd.Stdout = os.Stdout
 	upCmd.Stderr = os.Stderr
 

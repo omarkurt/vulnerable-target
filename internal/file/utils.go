@@ -1,21 +1,22 @@
 package file
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 )
 
 func CreateTempFile(content string, name string) (string, error) {
-	dir := filepath.Join(os.TempDir(), "vt-file")
+	tempDir := filepath.Join(os.TempDir(), "vt-file")
 
-	err := os.MkdirAll(dir, 0777)
+	err := os.MkdirAll(tempDir, 0700)
 	if err != nil {
-		return "", err
+		return "", fmt.Errorf("failed to create temp directory: %w", err)
 	}
 
-	filePath := filepath.Join(dir, name)
+	filePath := filepath.Join(tempDir, name)
 
-	err = os.WriteFile(filePath, []byte(content), 0644)
+	err = os.WriteFile(filePath, []byte(content), 0600)
 	if err != nil {
 		return "", err
 	}
