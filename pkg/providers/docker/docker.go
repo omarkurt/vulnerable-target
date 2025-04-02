@@ -7,8 +7,9 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"path/filepath"
 	"strings"
+
+	"github.com/happyhackingspace/vulnerable-target/internal/file"
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/api/types/container"
@@ -77,7 +78,8 @@ func Run() {
 			log.Fatal().Msgf("%v", err)
 		}
 	} else {
-		dockerfilePath, err := createDockerfile(content)
+		dockerfilePath, err := file.CreateTempFile(content, "Dockerfile")
+
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
 		}
@@ -141,24 +143,6 @@ func createContainer(ctx context.Context, image string, apiClient *client.Client
 	}
 
 	return containerCreate.ID, nil
-}
-
-func createDockerfile(content string) (string, error) {
-	dir := filepath.Join(os.TempDir(), "vt-dockerfile")
-
-	err := os.MkdirAll(dir, 0777)
-	if err != nil {
-		return "", err
-	}
-
-	dockerfilePath := filepath.Join(dir, "Dockerfile")
-
-	err = os.WriteFile(dockerfilePath, []byte(content), 0644)
-	if err != nil {
-		return "", err
-	}
-
-	return dockerfilePath, nil
 }
 
 func createBuildContext(dockerfilePath string) (io.Reader, error) {
