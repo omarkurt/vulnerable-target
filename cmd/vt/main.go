@@ -24,7 +24,9 @@ func main() {
 	case "docker":
 		fmt.Println("docker")
 	case "docker-compose":
-		(&dockercompose.DockerCompose{}).Start()
+		if err := (&dockercompose.DockerCompose{}).Start(); err != nil {
+			log.Fatal().Msgf("%v", err)
+		}
 	}
 	log.Info().Msgf("%s template is running on %s", options.TemplateID, options.ProviderName)
 	fmt.Println("Hello, World!")
