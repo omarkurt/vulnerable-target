@@ -8,3 +8,7 @@ import (
 var Providers = map[string]provider.Provider{
 	"docker-compose": &dockercompose.DockerCompose{},
 }
+
+func GetProvider(name string) provider.Provider {
+	return Providers[name]
+}
