@@ -1,20 +1,31 @@
 package main
 
 import (
+	"fmt"
+
 	"github.com/happyhackingspace/vulnerable-target/internal/cli"
-	"github.com/happyhackingspace/vulnerable-target/internal/config"
 	"github.com/happyhackingspace/vulnerable-target/internal/logger"
-	"github.com/happyhackingspace/vulnerable-target/pkg/providers"
+	"github.com/happyhackingspace/vulnerable-target/pkg/options"
+	"github.com/happyhackingspace/vulnerable-target/pkg/provider/dockercompose"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
+	"github.com/rs/zerolog/log"
 )
 
 func init() {
 	logger.Init()
 	templates.Init()
-	config.LoadEnv()
+	options.LoadEnv()
 }
 
 func main() {
 	cli.Execute()
-	providers.Start()
+	options := options.GetOptions()
+	switch options.ProviderName {
+	case "docker":
+		fmt.Println("docker")
+	case "docker-compose":
+		(&dockercompose.DockerCompose{}).Start()
+	}
+	log.Info().Msgf("%s template is running on %s", options.TemplateID, options.ProviderName)
+	fmt.Println("Hello, World!")
 }
