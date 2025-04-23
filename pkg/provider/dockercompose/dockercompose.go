@@ -6,7 +6,6 @@ import (
 	"os/exec"
 
 	"github.com/happyhackingspace/vulnerable-target/internal/file"
-	"github.com/happyhackingspace/vulnerable-target/pkg/options"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 )
@@ -20,8 +19,11 @@ func (d *DockerCompose) Name() string {
 }
 
 func (d *DockerCompose) Start() error {
-	options := options.GetOptions()
-	template := templates.Templates[options.TemplateID]
+	template, err := templates.GetCurrentTemplate()
+	if err != nil {
+		return err
+	}
+
 	composeContent := template.Providers["docker_compose"].Content
 
 	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
@@ -38,12 +40,20 @@ func (d *DockerCompose) Start() error {
 		return err
 	}
 
+	err = file.DeteleFile(composeFilePath)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
 
 func (d *DockerCompose) Stop() error {
-	options := options.GetOptions()
-	template := templates.Templates[options.TemplateID]
+	template, err := templates.GetCurrentTemplate()
+	if err != nil {
+		return err
+	}
+
 	composeContent := template.Providers["docker_compose"].Content
 
 	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
@@ -51,11 +61,16 @@ func (d *DockerCompose) Stop() error {
 		return err
 	}
 
-	downCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "down")
+	downCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "down", "--volumes")
 	downCmd.Stdout = os.Stdout
 	downCmd.Stderr = os.Stderr
 
 	err = downCmd.Run()
+	if err != nil {
+		return err
+	}
+
+	err = file.DeteleFile(composeFilePath)
 	if err != nil {
 		return err
 	}

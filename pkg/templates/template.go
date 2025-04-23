@@ -1,10 +1,12 @@
 package templates
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"strings"
 
+	"github.com/happyhackingspace/vulnerable-target/pkg/options"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/rs/zerolog/log"
 )
@@ -73,4 +75,13 @@ func List() {
 	t.SetCaption("there are %d templates", len(Templates))
 	t.SetIndexColumn(0)
 	t.Render()
+}
+
+func GetCurrentTemplate() (*Template, error) {
+	options := options.GetOptions()
+	template := Templates[options.TemplateID]
+	if template.ID == "" {
+		return nil, fmt.Errorf("template %s not found", options.TemplateID)
+	}
+	return &template, nil
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func CreateTempFile(content string, name string) (string, error) {
-	tempDir := filepath.Join(os.TempDir(), "vt-file")
+	tempDir := filepath.Join(os.TempDir(), "vt-folder")
 
 	err := os.MkdirAll(tempDir, 0700)
 	if err != nil {
@@ -22,4 +22,8 @@ func CreateTempFile(content string, name string) (string, error) {
 	}
 
 	return filePath, nil
+}
+
+func DeteleFile(path string) error {
+	return os.RemoveAll(path)
 }
