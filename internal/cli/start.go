@@ -15,7 +15,7 @@ import (
 var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Runs selected template on chosen provider",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		options := options.GetOptions()
 		provider := registry.GetProvider(options.ProviderName)
 		if len(options.TemplateID) == 0 || len(options.ProviderName) == 0 {

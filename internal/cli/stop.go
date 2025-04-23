@@ -15,7 +15,7 @@ import (
 var stopCmd = &cobra.Command{
 	Use:   "stop",
 	Short: "Stop vulnerable enviroment by template id and provider",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(cmd *cobra.Command, _ []string) {
 		options := options.GetOptions()
 		provider := registry.GetProvider(options.ProviderName)
 		if len(options.TemplateID) == 0 || len(options.ProviderName) == 0 {

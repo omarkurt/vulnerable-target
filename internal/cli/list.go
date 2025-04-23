@@ -8,7 +8,7 @@ import (
 var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "List all available templates with descriptions",
-	Run: func(cmd *cobra.Command, args []string) {
+	Run: func(_ *cobra.Command, _ []string) {
 		templates.List()
 	},
 }
