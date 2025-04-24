@@ -14,5 +14,5 @@ func init() {
 }
 
 func main() {
-	cli.Execute()
+	cli.Run()
 }

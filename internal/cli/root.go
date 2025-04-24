@@ -41,7 +41,7 @@ var rootCmd = &cobra.Command{
 	SilenceErrors: true,
 }
 
-func Execute() {
+func Run() {
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal().Msg(err.Error())
 	}
