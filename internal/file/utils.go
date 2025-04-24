@@ -24,6 +24,6 @@ func CreateTempFile(content string, name string) (string, error) {
 	return filePath, nil
 }
 
-func DeteleFile(path string) error {
+func DeleteFile(path string) error {
 	return os.RemoveAll(path)
 }

@@ -18,12 +18,7 @@ func (d *DockerCompose) Name() string {
 	return "docker-compose"
 }
 
-func (d *DockerCompose) Start() error {
-	template, err := templates.GetCurrentTemplate()
-	if err != nil {
-		return err
-	}
-
+func (d *DockerCompose) Start(template *templates.Template) error {
 	composeContent := template.Providers["docker_compose"].Content
 
 	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
@@ -40,7 +35,7 @@ func (d *DockerCompose) Start() error {
 		return err
 	}
 
-	err = file.DeteleFile(composeFilePath)
+	err = file.DeleteFile(composeFilePath)
 	if err != nil {
 		return err
 	}
@@ -48,12 +43,7 @@ func (d *DockerCompose) Start() error {
 	return nil
 }
 
-func (d *DockerCompose) Stop() error {
-	template, err := templates.GetCurrentTemplate()
-	if err != nil {
-		return err
-	}
-
+func (d *DockerCompose) Stop(template *templates.Template) error {
 	composeContent := template.Providers["docker_compose"].Content
 
 	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
@@ -70,7 +60,7 @@ func (d *DockerCompose) Stop() error {
 		return err
 	}
 
-	err = file.DeteleFile(composeFilePath)
+	err = file.DeleteFile(composeFilePath)
 	if err != nil {
 		return err
 	}
