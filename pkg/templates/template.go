@@ -76,7 +76,7 @@ func List() {
 	t.Render()
 }
 
-func GetById(templateID string) (*Template, error) {
+func GetByID(templateID string) (*Template, error) {
 	template := Templates[templateID]
 	if template.ID == "" {
 		return nil, fmt.Errorf("template %s not found", templateID)
