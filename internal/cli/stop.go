@@ -30,7 +30,7 @@ var stopCmd = &cobra.Command{
 			log.Fatal().Msgf("provider %s not found", options.ProviderName)
 		}
 
-		template, err := templates.GetById(options.TemplateID)
+		template, err := templates.GetByID(options.TemplateID)
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
 		}
