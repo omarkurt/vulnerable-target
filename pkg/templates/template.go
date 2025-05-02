@@ -1,6 +1,7 @@
 package templates
 
 import (
+	"fmt"
 	"os"
 	"path"
 	"strings"
@@ -73,4 +74,12 @@ func List() {
 	t.SetCaption("there are %d templates", len(Templates))
 	t.SetIndexColumn(0)
 	t.Render()
+}
+
+func GetByID(templateID string) (*Template, error) {
+	template := Templates[templateID]
+	if template.ID == "" {
+		return nil, fmt.Errorf("template %s not found", templateID)
+	}
+	return &template, nil
 }
