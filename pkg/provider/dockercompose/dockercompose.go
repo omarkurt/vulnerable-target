@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 
-	"github.com/happyhackingspace/vulnerable-target/internal/file"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 )
@@ -19,23 +19,22 @@ func (d *DockerCompose) Name() string {
 }
 
 func (d *DockerCompose) Start(template *templates.Template) error {
-	composeContent := template.Providers["docker_compose"].Content
-
-	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
-	if err != nil {
-		return err
+	path := template.Providers["docker-compose"].Path
+	var upCmd *exec.Cmd
+	if filepath.IsAbs(path) {
+		upCmd = exec.Command("docker", "compose", "-f", path, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "up", "-d") // #nosec G204
+	} else {
+		wd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		upCmd = exec.Command("docker", "compose", "-f", filepath.Join(wd, "templates", template.ID, path), "-p", fmt.Sprintf("vt-compose-%s", template.ID), "up", "-d") // #nosec G204
 	}
 
-	upCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "up", "-d")
 	upCmd.Stdout = os.Stdout
 	upCmd.Stderr = os.Stderr
 
-	err = upCmd.Run()
-	if err != nil {
-		return err
-	}
-
-	err = file.DeleteFile(composeFilePath)
+	err := upCmd.Run()
 	if err != nil {
 		return err
 	}
@@ -44,23 +43,22 @@ func (d *DockerCompose) Start(template *templates.Template) error {
 }
 
 func (d *DockerCompose) Stop(template *templates.Template) error {
-	composeContent := template.Providers["docker_compose"].Content
-
-	composeFilePath, err := file.CreateTempFile(composeContent, "docker-compose.yml")
-	if err != nil {
-		return err
+	path := template.Providers["docker-compose"].Path
+	var upCmd *exec.Cmd
+	if filepath.IsAbs(path) {
+		upCmd = exec.Command("docker", "compose", "-f", path, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "down", "--volumes") // #nosec G204
+	} else {
+		wd, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		upCmd = exec.Command("docker", "compose", "-f", filepath.Join(wd, "templates", template.ID, path), "-p", fmt.Sprintf("vt-compose-%s", template.ID), "down", "--volumes") // #nosec G204
 	}
 
-	downCmd := exec.Command("docker", "compose", "-f", composeFilePath, "-p", fmt.Sprintf("vt-compose-%s", template.ID), "down", "--volumes")
-	downCmd.Stdout = os.Stdout
-	downCmd.Stderr = os.Stderr
+	upCmd.Stdout = os.Stdout
+	upCmd.Stderr = os.Stderr
 
-	err = downCmd.Run()
-	if err != nil {
-		return err
-	}
-
-	err = file.DeleteFile(composeFilePath)
+	err := upCmd.Run()
 	if err != nil {
 		return err
 	}

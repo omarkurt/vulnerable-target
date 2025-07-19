@@ -1,6 +1,6 @@
 ---
 
-id: vulnerable-target
+id: example-template
 
 info:
   name: Vulnerable Target
@@ -27,40 +27,25 @@ providers:
     content: |
       # prompt:
       # model:
-  docker:
-    ports:  # add ports for container
-      "hostPort/protocol": "containerPort"
-    content: |
-      # (Optional) full Dockerfile content to build from scratch
-      #if it's image start with IMAGE:php:7.4-apache
-      FROM php:7.4-apache
-      RUN docker-php-ext-install mysqli
       # ...
   docker_compose:
-    content: |
-      version: '3.3'
-      services:
-        app:
-          image: some-vulnerable-target:latest
-          ports:
-            - "80:80"
-          # ...
+    path: |
 
-  # For instance: CloudFormation template, Terraform snippet, or other cloud providers/services
+# For instance: CloudFormation template, Terraform snippet, or other cloud providers/services
   aws:
-    content: |
+    path: |
       # CloudFormation/Terraform/Pulumi snippet
       # ....
   gcp:
-    content: |
+    path: |
       # CloudFormation/Terraform/Pulumi snippet
       # ....
   azure:
-    content: |
+    path: |
       # CloudFormation/Terraform/Pulumi snippet
       # ....
   nix:
-    content: |
+    path: |
       { pkgs ? import <nixpkgs> {} }:
       pkgs.stdenv.mkDerivation {
         name = "vulnerable-target-env";

@@ -3,13 +3,14 @@ package templates
 import (
 	"fmt"
 	"os"
+	"path"
 
 	yaml "gopkg.in/yaml.v3"
 )
 
 func LoadTemplate(filepath string) (Template, error) {
 	var tmpl Template
-	file, err := os.ReadFile(filepath)
+	file, err := os.ReadFile(path.Join(filepath, "index.yaml"))
 	if err != nil {
 		return tmpl, err
 	}

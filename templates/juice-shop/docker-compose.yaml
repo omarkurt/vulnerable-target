@@ -1,0 +1,24 @@
+---
+
+services:
+  juice-shop:
+    image: bkimminich/juice-shop
+    container_name: juice-shop
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - juice-shop-network
+    volumes:
+      - juice-shop-data:/juice-shop/data
+      - juice-shop-logs:/juice-shop/logs
+
+volumes:
+  juice-shop-data:
+  juice-shop-logs:
+
+networks:
+  juice-shop-network:
+    driver: bridge

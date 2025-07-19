@@ -27,11 +27,7 @@ type Info struct {
 }
 
 type ProviderConfig struct {
-	Targets  []string          `yaml:"targets,omitempty"`
-	Ports    map[string]string `yaml:"ports,omitempty"`
-	Content  string            `yaml:"content,omitempty"`
-	Setup    string            `yaml:"setup,omitempty"`
-	Teardown string            `yaml:"teardown,omitempty"`
+	Path string `yaml:"path"`
 }
 
 var Templates = make(map[string]Template)
@@ -50,6 +46,9 @@ func Init() {
 		template, err := LoadTemplate(path.Join(home, entry.Name()))
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
+		}
+		if template.ID != entry.Name() {
+			log.Fatal().Msgf("id and directory name should match")
 		}
 		Templates[template.ID] = template
 	}
