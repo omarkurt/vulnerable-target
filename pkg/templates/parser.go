@@ -12,8 +12,8 @@ import (
 )
 
 var (
-	dockerNameRegex    = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9_.-]*$`)
-	allowedComposeExts = map[string]bool{
+	templateIDRegex     = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9_.-]*$`)
+	allowedProviderExts = map[string]bool{
 		".yml":  true,
 		".yaml": true,
 	}
@@ -42,7 +42,7 @@ func validateTemplate(template Template) error {
 		return fmt.Errorf("template ID is missing")
 	}
 
-	if !dockerNameRegex.MatchString(template.ID) {
+	if !templateIDRegex.MatchString(template.ID) {
 		return fmt.Errorf("template ID '%s' contains invalid characters", template.ID)
 	}
 
@@ -53,7 +53,7 @@ func validateTemplate(template Template) error {
 	for name, provider := range template.Providers {
 		providerPath := provider.Path
 
-		if provider.Path == "" {
+		if providerPath == "" {
 			return fmt.Errorf("provider '%s': path is empty", name)
 		}
 
@@ -67,7 +67,7 @@ func validateTemplate(template Template) error {
 
 		ext := filepath.Ext(providerPath)
 		if !isAllowedExtension(ext) {
-			return fmt.Errorf("provider '%s': provider file must have one of the allowed extensions: %v", name, allowedComposeExts)
+			return fmt.Errorf("provider '%s': provider file must have one of the allowed extensions: %v", name, allowedProviderExts)
 		}
 	}
 
@@ -75,5 +75,5 @@ func validateTemplate(template Template) error {
 }
 
 func isAllowedExtension(ext string) bool {
-	return allowedComposeExts[ext]
+	return allowedProviderExts[ext]
 }
