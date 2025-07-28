@@ -60,6 +60,9 @@ func List() {
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"ID", "Name", "Author", "Technologies", "Tags"})
 	for id, template := range Templates {
+		if template.ID == "example-template" {
+			continue
+		}
 		technologies := strings.Join(template.Info.Technologies, ", ")
 		tags := strings.Join(template.Info.Tags, ", ")
 		t.AppendRow(table.Row{

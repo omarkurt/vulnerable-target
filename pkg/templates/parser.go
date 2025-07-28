@@ -13,7 +13,10 @@ import (
 
 var (
 	dockerNameRegex    = regexp.MustCompile(`^[a-zA-Z0-9][a-zA-Z0-9_.-]*$`)
-	allowedComposeExts = []string{".yml", ".yaml"}
+	allowedComposeExts = map[string]bool{
+		".yml":  true,
+		".yaml": true,
+	}
 )
 
 func LoadTemplate(filepath string) (Template, error) {
@@ -50,6 +53,10 @@ func validateTemplate(template Template) error {
 	for name, provider := range template.Providers {
 		providerPath := provider.Path
 
+		if provider.Path == "" {
+			return fmt.Errorf("provider '%s': path is empty", name)
+		}
+
 		if filepath.IsAbs(providerPath) {
 			return fmt.Errorf("provider '%s': absolute paths are not allowed", name)
 		}
@@ -59,7 +66,7 @@ func validateTemplate(template Template) error {
 		}
 
 		ext := filepath.Ext(providerPath)
-		if !isAllowedExtension(ext, allowedComposeExts) {
+		if !isAllowedExtension(ext) {
 			return fmt.Errorf("provider '%s': provider file must have one of the allowed extensions: %v", name, allowedComposeExts)
 		}
 	}
@@ -67,11 +74,6 @@ func validateTemplate(template Template) error {
 	return nil
 }
 
-func isAllowedExtension(ext string, allowed []string) bool {
-	for _, allowedExt := range allowed {
-		if ext == allowedExt {
-			return true
-		}
-	}
-	return false
+func isAllowedExtension(ext string) bool {
+	return allowedComposeExts[ext]
 }
