@@ -6,7 +6,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/happyhackingspace/vulnerable-target/pkg/options"
+	"github.com/happyhackingspace/vulnerable-target/internal/options"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider/registry"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 	"github.com/rs/zerolog/log"

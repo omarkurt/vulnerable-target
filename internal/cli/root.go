@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/happyhackingspace/vulnerable-target/internal/logger"
-	"github.com/happyhackingspace/vulnerable-target/pkg/options"
+	"github.com/happyhackingspace/vulnerable-target/internal/options"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
