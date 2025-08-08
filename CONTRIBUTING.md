@@ -8,7 +8,7 @@ We welcome contributions from everyone! Here's how you can contribute:
 
 2. **Create a New Branch**
     - Make your changes
-    - If you want to add a new vulnerable target template, check [the example template](./templates/example-template.yaml)
+    - If you want to add a new vulnerable target template, check [the example template](./templates/example-template/index.yaml)
     - Test your changes locally before submitting
 
 3. **Submit a Pull Request**
