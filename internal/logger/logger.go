@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/happyhackingspace/vulnerable-target/pkg/options"
+	"github.com/happyhackingspace/vulnerable-target/internal/options"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
