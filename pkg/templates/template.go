@@ -3,7 +3,7 @@ package templates
 import (
 	"fmt"
 	"os"
-	"path"
+	"path/filepath"
 	"strings"
 
 	"github.com/jedib0t/go-pretty/v6/table"
@@ -27,11 +27,7 @@ type Info struct {
 }
 
 type ProviderConfig struct {
-	Targets  []string          `yaml:"targets,omitempty"`
-	Ports    map[string]string `yaml:"ports,omitempty"`
-	Content  string            `yaml:"content,omitempty"`
-	Setup    string            `yaml:"setup,omitempty"`
-	Teardown string            `yaml:"teardown,omitempty"`
+	Path string `yaml:"path"`
 }
 
 var Templates = make(map[string]Template)
@@ -41,15 +37,18 @@ func Init() {
 	if err != nil {
 		log.Fatal().Msgf("%v", err)
 	}
-	home := path.Join(wd, "templates")
+	home := filepath.Join(wd, "templates")
 	dirEntry, err := os.ReadDir(home)
 	if err != nil {
 		log.Fatal().Msgf("%v", err)
 	}
 	for _, entry := range dirEntry {
-		template, err := LoadTemplate(path.Join(home, entry.Name()))
+		template, err := LoadTemplate(filepath.Join(home, entry.Name()))
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
+		}
+		if template.ID != entry.Name() {
+			log.Fatal().Msgf("id and directory name should match")
 		}
 		Templates[template.ID] = template
 	}
@@ -61,6 +60,9 @@ func List() {
 	t.SetOutputMirror(os.Stdout)
 	t.AppendHeader(table.Row{"ID", "Name", "Author", "Technologies", "Tags"})
 	for id, template := range Templates {
+		if template.ID == "example-template" {
+			continue
+		}
 		technologies := strings.Join(template.Info.Technologies, ", ")
 		tags := strings.Join(template.Info.Tags, ", ")
 		t.AppendRow(table.Row{

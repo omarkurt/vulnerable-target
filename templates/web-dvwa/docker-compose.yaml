@@ -1,0 +1,21 @@
+---
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    ports:
+      - "8081:80"
+    environment:
+      - MYSQL_ROOT_PASSWORD=p@ssw0rd
+    volumes:
+      - dvwa_data:/var/lib/mysql
+    restart: unless-stopped
+    networks:
+      - dvwa_network
+
+volumes:
+  dvwa_data:
+
+networks:
+  dvwa_network:
+    driver: bridge
