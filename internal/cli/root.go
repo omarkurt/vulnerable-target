@@ -8,7 +8,7 @@ import (
 
 	"github.com/happyhackingspace/vulnerable-target/internal/logger"
 	"github.com/happyhackingspace/vulnerable-target/internal/options"
-	"github.com/happyhackingspace/vulnerable-target/internal/utils"
+	banner "github.com/happyhackingspace/vulnerable-target/internal/utils"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
@@ -35,11 +35,11 @@ func init() {
 var rootCmd = &cobra.Command{
 	Use:     "vt",
 	Short:   "Create vulnerable environment",
-	Version: utils.AppVersion,
+	Version: banner.AppVersion,
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 		logger.Init()
 		if cmd.Name() != "help" {
-			fmt.Println(utils.Banner())
+			fmt.Println(banner.Banner())
 		}
 	},
 	SilenceErrors: true,
@@ -49,7 +49,7 @@ func Run() {
 
 	originalHelp := rootCmd.HelpFunc()
 	rootCmd.SetHelpFunc(func(c *cobra.Command, s []string) {
-		fmt.Println(utils.Banner())
+		fmt.Println(banner.Banner())
 		originalHelp(c, s)
 	})
 

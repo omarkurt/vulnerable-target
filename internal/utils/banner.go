@@ -1,10 +1,10 @@
-package utils
+package banner
 
 import (
+	"crypto/rand"
 	"fmt"
-	"math/rand"
+	"math/big"
 	"strings"
-	"time"
 )
 
 const (
@@ -26,7 +26,6 @@ var quotesList = []Quote{
 	{Text: "\033[1;3mThink like a hacker, act like an engineer.\033[0m", Author: "Security Community"},
 	{Text: "\033[1;3mOpen source is power.\033[0m", Author: "Open Source Advocates"},
 	{Text: "\033[1;3mInformation wants to be free.\033[0m", Author: "Stewart Brand"},
-	//{Text: "\033[1;3mPreze Hayat Dogru Yasanmaz.\033[0m", Author: "Piso Meheme"}, :>
 }
 
 var rainbowColors = []string{
@@ -36,10 +35,6 @@ var rainbowColors = []string{
 	"\033[36m", // Cyan
 	"\033[34m", // Blue
 	"\033[35m", // Magenta
-}
-
-func init() {
-	rand.Seed(time.Now().UnixNano())
 }
 
 func RainbowText(text string) string {
@@ -57,7 +52,11 @@ func randomQuote() string {
 	if len(quotesList) == 0 {
 		return ""
 	}
-	q := quotesList[rand.Intn(len(quotesList))]
+	n, err := rand.Int(rand.Reader, big.NewInt(int64(len(quotesList))))
+	if err != nil {
+		return ""
+	}
+	q := quotesList[n.Int64()]
 	return fmt.Sprintf("%s — %s", q.Text, q.Author)
 }
 
@@ -77,6 +76,6 @@ func Banner() string {
 `, title, quote, AppVersion, strings.Repeat("-", 62))
 }
 
-func PrintBanner(_ string) {
+func PrintBanner() {
 	fmt.Println(Banner())
 }
