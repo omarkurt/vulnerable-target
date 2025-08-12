@@ -1,0 +1,20 @@
+---
+id: webgoat
+
+info:
+  name: WebGoat
+  author: hhsteam
+  description: |
+    Server-side flaws and educational lessons in a multi-platform environment.
+  references:
+    - http://www.itsecgames.com/
+  technologies:
+    - java
+  tags:
+    - owasp
+    - web
+    - server-side
+
+providers:
+  docker-compose:
+    path: "docker-compose.yaml"
