@@ -38,7 +38,8 @@ var rootCmd = &cobra.Command{
 	Version: banner.AppVersion,
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 		logger.Init()
-		if cmd.Name() != "help" {
+		// Avoid printing the large banner for TUI-based commands like status
+		if cmd.Name() != "help" && cmd.Name() != "status" && (cmd.Parent() == nil || cmd.Parent().Name() != "status") {
 			fmt.Println(banner.Banner())
 		}
 	},
