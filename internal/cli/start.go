@@ -6,7 +6,6 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/happyhackingspace/vulnerable-target/internal/options"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider/registry"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 	"github.com/rs/zerolog/log"
@@ -17,20 +16,29 @@ var startCmd = &cobra.Command{
 	Use:   "start",
 	Short: "Runs selected template on chosen provider",
 	Run: func(cmd *cobra.Command, _ []string) {
-		options := options.GetOptions()
-		provider := registry.GetProvider(options.ProviderName)
-		if len(options.TemplateID) == 0 || len(options.ProviderName) == 0 {
+		providerName, err := cmd.Flags().GetString("provider")
+		if err != nil {
+			log.Fatal().Msgf("%v", err)
+		}
+
+		templateID, err := cmd.Flags().GetString("id")
+		if err != nil {
+			log.Fatal().Msgf("%v", err)
+		}
+		provider := registry.GetProvider(providerName)
+		if len(templateID) == 0 {
 			err := cmd.Help()
 			if err != nil {
 				log.Fatal().Msgf("%v", err)
 			}
 			return
 		}
+
 		if provider == nil {
-			log.Fatal().Msgf("provider %s not found", options.ProviderName)
+			log.Fatal().Msgf("provider %s not found", providerName)
 		}
 
-		template, err := templates.GetByID(options.TemplateID)
+		template, err := templates.GetByID(templateID)
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
 		}
@@ -40,19 +48,22 @@ var startCmd = &cobra.Command{
 			log.Fatal().Msgf("%v", err)
 		}
 
-		log.Info().Msgf("%s template is running on %s", options.TemplateID, options.ProviderName)
+		log.Info().Msgf("%s template is running on %s", templateID, providerName)
 	},
 }
 
 func init() {
-	options := options.GetOptions()
-
 	rootCmd.AddCommand(startCmd)
 
-	startCmd.Flags().StringVarP(&options.ProviderName, "provider", "p", "",
+	startCmd.Flags().StringP("provider", "p", "docker-compose",
 		fmt.Sprintf("Specify the provider for building a vulnerable environment (%s)",
 			strings.Join(slices.Collect(maps.Keys(registry.Providers)), ", ")))
 
-	startCmd.Flags().StringVar(&options.TemplateID, "id", "",
+	startCmd.Flags().String("id", "",
 		"Specify a template ID for targeted vulnerable environment")
+
+	err := startCmd.MarkFlagRequired("id")
+	if err != nil {
+		log.Fatal().Msgf("%v", err)
+	}
 }
