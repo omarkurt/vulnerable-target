@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: vulnerables/web-dvwa:latest
+    image: ghcr.io/happyhackingspace/web-dvwa
     ports:
       - "80:80"
     environment:
