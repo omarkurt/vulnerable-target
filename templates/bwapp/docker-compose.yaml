@@ -2,15 +2,13 @@
 
 services:
   web:
-    image: vulnerables/web-dvwa:latest
+    image: hackersploit/bwapp-docker:latest
     ports:
       - "80:80"
-    environment:
-      - MYSQL_ROOT_PASSWORD=p@ssw0rd
-    volumes:
-      - data:/var/lib/mysql
     networks:
       - network
+    volumes:
+      - data:/app
 
 volumes:
   data:

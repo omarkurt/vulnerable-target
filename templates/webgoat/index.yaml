@@ -1,0 +1,21 @@
+---
+id: webgoat
+
+info:
+  name: WebGoat
+  author: hhsteam
+  description: |
+    Server-side flaws and educational lessons in a multi-platform environment.
+  references:
+    - https://owasp.org/www-project-webgoat/
+    - https://github.com/WebGoat/WebGoat
+  technologies:
+    - java
+  tags:
+    - owasp
+    - web
+    - server-side
+
+providers:
+  docker-compose:
+    path: "docker-compose.yaml"

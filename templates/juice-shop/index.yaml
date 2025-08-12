@@ -12,11 +12,20 @@ info:
   references:
     - https://owasp.org/www-project-juice-shop
   technologies:
-    - javascript
-    - typescript
-  tags:
-    - owasp
     - nodejs
+    - angular
+    - express
+    - sqlite
+  tags:
+    - xss
+    - injection
+    - broken-auth
+    - sensitive-data
+    - xxe
+    - security-misconfiguration
+    - web
+    - rest-api
+
 
 providers:
   docker-compose:

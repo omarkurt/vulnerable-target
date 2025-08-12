@@ -1,0 +1,21 @@
+---
+id: bwapp
+
+info:
+  name: bWAPP
+  author: hhsteam
+  description: |
+    Web application with over 100 vulnerabilities for testing.
+  references:
+    - http://www.itsecgames.com/
+  technologies:
+    - php
+    - mysql
+  tags:
+    - owasp
+    - web
+    - vulnerabilities
+
+providers:
+  docker-compose:
+    path: "docker-compose.yaml"
