@@ -4,15 +4,12 @@ import (
 	"os"
 	"time"
 
-	"github.com/happyhackingspace/vulnerable-target/internal/options"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 )
 
-func Init() {
-	options := options.GetOptions()
-
-	level, err := zerolog.ParseLevel(options.VerbosityLevel)
+func InitWithLevel(verbosityLevel string) {
+	level, err := zerolog.ParseLevel(verbosityLevel)
 	if err != nil {
 		level = zerolog.InfoLevel
 	}
@@ -29,4 +26,8 @@ func Init() {
 		With().
 		Timestamp().
 		Logger()
+}
+
+func Init() {
+	InitWithLevel("info")
 }

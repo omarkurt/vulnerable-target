@@ -7,7 +7,6 @@ import (
 	"strings"
 
 	"github.com/happyhackingspace/vulnerable-target/internal/logger"
-	"github.com/happyhackingspace/vulnerable-target/internal/options"
 	banner "github.com/happyhackingspace/vulnerable-target/internal/utils"
 
 	"github.com/rs/zerolog"
@@ -25,9 +24,7 @@ var LogLevels = map[string]bool{
 }
 
 func init() {
-	options := options.GetOptions()
-
-	rootCmd.PersistentFlags().StringVarP(&options.VerbosityLevel, "verbosity", "v", zerolog.InfoLevel.String(),
+	rootCmd.PersistentFlags().StringP("verbosity", "v", zerolog.InfoLevel.String(),
 		fmt.Sprintf("Set the verbosity level for logs (%s)",
 			strings.Join(slices.Collect(maps.Keys(LogLevels)), ", ")))
 }
@@ -37,16 +34,17 @@ var rootCmd = &cobra.Command{
 	Short:   "Create vulnerable environment",
 	Version: banner.AppVersion,
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
-		logger.Init()
-		if cmd.Name() != "help" {
-			fmt.Println(banner.Banner())
+		verbosityLevel, err := cmd.Flags().GetString("verbosity")
+		if err != nil {
+			log.Error().Err(err)
 		}
+
+		logger.InitWithLevel(verbosityLevel)
 	},
 	SilenceErrors: true,
 }
 
 func Run() {
-
 	originalHelp := rootCmd.HelpFunc()
 	rootCmd.SetHelpFunc(func(c *cobra.Command, s []string) {
 		fmt.Println(banner.Banner())

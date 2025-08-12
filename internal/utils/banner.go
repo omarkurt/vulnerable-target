@@ -9,7 +9,7 @@ import (
 
 const (
 	AppName    = "vt"
-	AppVersion = "v1.0.0"
+	AppVersion = "v0.0.1"
 )
 
 type Quote struct {
@@ -66,11 +66,11 @@ func Banner() string {
 	return fmt.Sprintf(`
  HHS     HHS HHSHHSHHSHHS
  HHS     HHS     HHS      %-40s
- HHS     HHS     HHS     
- HHSx   xHHS     HHS     
+ HHS     HHS     HHS
+ HHSx   xHHS     HHS
   xHHS xHHS      HHS      %-40s
-   HHSHHS        HHS    
-    HHHH         HHS    
+   HHSHHS        HHS
+    HHHH         HHS
      HHS         HHS       %s
 %s
 `, title, quote, AppVersion, strings.Repeat("-", 62))
