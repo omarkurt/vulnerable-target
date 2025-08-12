@@ -36,10 +36,12 @@ var rootCmd = &cobra.Command{
 	PersistentPreRun: func(cmd *cobra.Command, _ []string) {
 		verbosityLevel, err := cmd.Flags().GetString("verbosity")
 		if err != nil {
-			log.Error().Err(err)
+			log.Fatal().Msgf("%v", err)
 		}
-
 		logger.InitWithLevel(verbosityLevel)
+		if cmd.Name() != "help" {
+			fmt.Println(banner.Banner())
+		}
 	},
 	SilenceErrors: true,
 }
