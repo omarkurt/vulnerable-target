@@ -7,7 +7,8 @@ info:
   description: |
     Server-side flaws and educational lessons in a multi-platform environment.
   references:
-    - http://www.itsecgames.com/
+    - https://owasp.org/www-project-webgoat/
+    - https://github.com/WebGoat/WebGoat
   technologies:
     - java
   tags:
