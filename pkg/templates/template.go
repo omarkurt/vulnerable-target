@@ -71,16 +71,29 @@ func ListWithFilter(filterTag string) {
 			continue
 		}
 
-		// Apply tag filter if specified
+		// Apply filter if specified (matches tags or technologies)
 		if filterTag != "" {
-			hasTag := false
+			needle := strings.ToLower(filterTag)
+			matched := false
+			// Check tags
 			for _, tag := range template.Info.Tags {
-				if strings.EqualFold(tag, filterTag) || strings.Contains(strings.ToLower(tag), strings.ToLower(filterTag)) {
-					hasTag = true
+				val := strings.ToLower(tag)
+				if val == needle || strings.Contains(val, needle) {
+					matched = true
 					break
 				}
 			}
-			if !hasTag {
+			// Check technologies if not matched yet
+			if !matched {
+				for _, tech := range template.Info.Technologies {
+					val := strings.ToLower(tech)
+					if val == needle || strings.Contains(val, needle) {
+						matched = true
+						break
+					}
+				}
+			}
+			if !matched {
 				continue
 			}
 		}
