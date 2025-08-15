@@ -6,7 +6,7 @@ Vulnerable Target (VT) is a specialized tool designed for security professionals
 - Interactive Vulnerability Playground (TODO)
 - CLI (In-Progress)
 
-## How to Run
+## Quickstart
 1. Clone the repository
 ```bash
 git clone https://github.com/HappyHackingSpace/vulnerable-target.git
@@ -22,6 +22,8 @@ go mod download
 ```bash
 go run cmd/vt/main.go
 ```
+## Documentation
+Check the full documentation here: [Vulnerable Target Wiki](https://github.com/HappyHackingSpace/vulnerable-target/wiki)
 
 ## How to Contribute
 Hack! don't forget to follow [CONTRIBUTING.md](./CONTRIBUTING.md)
