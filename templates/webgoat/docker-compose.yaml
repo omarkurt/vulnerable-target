@@ -2,7 +2,7 @@
 
 services:
   webgoat:
-    image: webgoat/webgoat:latest
+    image: ghcr.io/happyhackingspace/webgoat:latest
     ports:
       - "8080:8080"
       - "9090:9090"

@@ -2,14 +2,14 @@
 
 services:
   database:
-    image: docker.io/webpwnized/mutillidae:database
+    image: ghcr.io/happyhackingspace/mutillidae-database:latest
     networks:
       - datanet
 
   database_admin:
     depends_on:
       - database
-    image: docker.io/webpwnized/mutillidae:database_admin
+    image: ghcr.io/happyhackingspace/mutillidae-database_admin:latest
     ports:
       - 127.0.0.1:81:80
     networks:
@@ -19,7 +19,7 @@ services:
     depends_on:
       - database
       - directory
-    image: docker.io/webpwnized/mutillidae:www
+    image: ghcr.io/happyhackingspace/mutillidae-www:latest
     ports:
       - 127.0.0.1:80:80
       - 127.0.0.1:443:443
@@ -28,7 +28,7 @@ services:
       - ldapnet
 
   directory:
-    image: docker.io/webpwnized/mutillidae:ldap
+    image: ghcr.io/happyhackingspace/mutillidae-ldap:latest
     volumes:
       - ldap_data:/var/lib/ldap
       - ldap_config:/etc/ldap/slapd.d
@@ -40,7 +40,7 @@ services:
   directory_admin:
     depends_on:
       - directory
-    image: docker.io/webpwnized/mutillidae:ldap_admin
+    image: ghcr.io/happyhackingspace/mutillidae-ldap_admin:latest
     ports:
       - 127.0.0.1:82:80
     networks:

@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: bkimminich/juice-shop:latest
+    image: ghcr.io/happyhackingspace/juice-shop:latest
     ports:
       - "3000:3000"
     environment:

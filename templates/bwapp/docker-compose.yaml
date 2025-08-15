@@ -2,7 +2,7 @@
 
 services:
   web:
-    image: hackersploit/bwapp-docker:latest
+    image: ghcr.io/happyhackingspace/bwapp
     ports:
       - "80:80"
     networks:
