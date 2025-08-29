@@ -40,7 +40,7 @@ var rootCmd = &cobra.Command{
 		}
 		logger.InitWithLevel(verbosityLevel)
 		if cmd.Name() != "help" {
-			fmt.Println(banner.Banner())
+			banner.Print()
 		}
 	},
 	SilenceErrors: true,
@@ -49,7 +49,7 @@ var rootCmd = &cobra.Command{
 func Run() {
 	originalHelp := rootCmd.HelpFunc()
 	rootCmd.SetHelpFunc(func(c *cobra.Command, s []string) {
-		fmt.Println(banner.Banner())
+		banner.Print()
 		originalHelp(c, s)
 	})
 

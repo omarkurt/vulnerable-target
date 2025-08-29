@@ -63,8 +63,7 @@ func randomQuote() string {
 func Banner() string {
 	title := RainbowText("Next-generation vuln-focused testing platform")
 	quote := randomQuote()
-	return fmt.Sprintf(`
- HHS     HHS HHSHHSHHSHHS
+	return fmt.Sprintf(` HHS     HHS HHSHHSHHSHHS
  HHS     HHS     HHS      %-40s
  HHS     HHS     HHS
  HHSx   xHHS     HHS
@@ -73,9 +72,9 @@ func Banner() string {
     HHHH         HHS
      HHS         HHS       %s
 %s
-`, title, quote, AppVersion, strings.Repeat("-", 62))
+`, title, quote, AppVersion, strings.Repeat("-", 72))
 }
 
-func PrintBanner() {
-	fmt.Println(Banner())
+func Print() {
+	fmt.Print(Banner())
 }
