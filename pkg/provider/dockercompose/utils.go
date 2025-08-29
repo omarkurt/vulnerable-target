@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/compose-spec/compose-go/v2/loader"
 	"github.com/compose-spec/compose-go/v2/types"
@@ -31,7 +32,15 @@ func createDockerCLI() (command.Cli, error) {
 }
 
 func loadComposeProject(template templates.Template) (*types.Project, error) {
-	composePath, workingDir, err := resolveComposePath(template.ID, template.Providers["docker-compose"].Path)
+	pc, ok := template.Providers["docker-compose"]
+	if !ok {
+		return nil, fmt.Errorf("template %q missing docker-compose provider configuration", template.ID)
+	}
+	if pc.Path == "" {
+		return nil, fmt.Errorf("template %q docker-compose.path is empty", template.ID)
+	}
+
+	composePath, workingDir, err := resolveComposePath(template.ID, pc.Path)
 	if err != nil {
 		return nil, err
 	}
@@ -85,7 +94,8 @@ func loadComposeProject(template templates.Template) (*types.Project, error) {
 
 func runComposeUp(dockerCli command.Cli, project *types.Project) error {
 	composeService := compose.NewComposeService(dockerCli)
-	ctx := context.Background()
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
 
 	err := composeService.Pull(ctx, project, api.PullOptions{})
 	if err != nil {
@@ -115,9 +125,26 @@ func runComposeUp(dockerCli command.Cli, project *types.Project) error {
 	return nil
 }
 
+func runComposeDown(dockerCli command.Cli, project *types.Project) error {
+	composeService := compose.NewComposeService(dockerCli)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
+	defer cancel()
+
+	err := composeService.Down(ctx, project.Name, api.DownOptions{
+		Project:       project,
+		RemoveOrphans: true,
+		Volumes:       true,
+	})
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func resolveComposePath(templateID, path string) (composePath string, workingDir string, err error) {
 	if filepath.IsAbs(path) {
-		return path, filepath.Dir(composePath), nil
+		return path, filepath.Dir(path), nil
 	}
 
 	wd, err := os.Getwd()
@@ -127,8 +154,8 @@ func resolveComposePath(templateID, path string) (composePath string, workingDir
 
 	composePath = filepath.Join(wd, "templates", templateID, path)
 
-	if _, err := os.Stat(composePath); os.IsNotExist(err) {
-		return "", "", err
+	if _, statErr := os.Stat(composePath); statErr != nil {
+		return "", "", fmt.Errorf("compose file %q not accessible: %w", composePath, statErr)
 	}
 
 	return composePath, filepath.Dir(composePath), nil

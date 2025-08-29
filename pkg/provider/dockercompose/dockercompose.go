@@ -1,10 +1,6 @@
 package dockercompose
 
 import (
-	"context"
-
-	"github.com/docker/compose/v2/pkg/api"
-	"github.com/docker/compose/v2/pkg/compose"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 )
@@ -47,13 +43,7 @@ func (d *DockerCompose) Stop(template *templates.Template) error {
 		return err
 	}
 
-	composeService := compose.NewComposeService(dockerCli)
-	ctx := context.Background()
-
-	err = composeService.Down(ctx, project.Name, api.DownOptions{
-		RemoveOrphans: true,
-		Volumes:       true,
-	})
+	err = runComposeDown(dockerCli, project)
 	if err != nil {
 		return err
 	}
