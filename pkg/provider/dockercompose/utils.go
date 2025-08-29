@@ -32,15 +32,15 @@ func createDockerCLI() (command.Cli, error) {
 }
 
 func loadComposeProject(template templates.Template) (*types.Project, error) {
-	pc, ok := template.Providers["docker-compose"]
-	if !ok {
+	providerConfig, exists := template.Providers["docker-compose"]
+	if !exists {
 		return nil, fmt.Errorf("template %q missing docker-compose provider configuration", template.ID)
 	}
-	if pc.Path == "" {
+	if providerConfig.Path == "" {
 		return nil, fmt.Errorf("template %q docker-compose.path is empty", template.ID)
 	}
 
-	composePath, workingDir, err := resolveComposePath(template.ID, pc.Path)
+	composePath, workingDir, err := resolveComposePath(template.ID, providerConfig.Path)
 	if err != nil {
 		return nil, err
 	}
