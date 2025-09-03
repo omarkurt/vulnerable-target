@@ -31,11 +31,12 @@ jobs:
             -w /app \
             -e CI=true \
             vulnerable-target \
-            /bin/bash -c "cd /app && \
-              make gofmt \
-              make golangci \
-              make govet \
-              make goerrcheck
+            /bin/bash -c 'set -euo pipefail
+              cd /app && \
+              make gofmt && \
+              make golangci && \
+              make govet && \
+              make goerrcheck'
 
   hadolint:
     name: Run Hadolint
