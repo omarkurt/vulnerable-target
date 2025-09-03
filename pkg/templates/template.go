@@ -12,25 +12,36 @@ import (
 
 // Template represents a vulnerable target environment configuration.
 type Template struct {
-	ID        string                    `yaml:"id"`
-	Info      Info                      `yaml:"info"`
-	Providers map[string]ProviderConfig `yaml:"providers"`
+	ID             string                    `yaml:"id"`
+	Info           Info                      `yaml:"info"`
+	ProofOfConcept map[string][]string       `yaml:"poc"`
+	Remediation    []string                  `yaml:"remediation"`
+	Providers      map[string]ProviderConfig `yaml:"providers"`
 }
 
 // Info contains metadata about a template.
 type Info struct {
-	Name         string                 `yaml:"name"`
-	Author       string                 `yaml:"author"`
-	Description  string                 `yaml:"description"`
-	References   []string               `yaml:"references"`
-	Technologies []string               `yaml:"technologies"`
-	Tags         []string               `yaml:"tags"`
-	Metadata     map[string]interface{} `yaml:"metadata"`
+	Name             string   `yaml:"name"`
+	Description      string   `yaml:"description"`
+	Author           string   `yaml:"author"`
+	Target           []string `yaml:"target"`
+	Type             string   `yaml:"type"`
+	AffectedVersions []string `yaml:"affected_versions"`
+	FixedVersion     string   `yaml:"fixed_version"`
+	Cwe              string   `yaml:"cwe"`
+	Cvss             Cvss     `yaml:"cvss"`
+	Tags             []string `yaml:"tags"`
+	References       []string `yaml:"references"`
 }
 
 // ProviderConfig contains configuration for a specific provider.
 type ProviderConfig struct {
 	Path string `yaml:"path"`
+}
+
+type Cvss struct {
+	Score   string `yaml:"score"`
+	Metrics string `yaml:"metrics"`
 }
 
 // Templates contains all loaded templates indexed by their ID.
@@ -64,20 +75,14 @@ func List() {
 	ListWithFilter("")
 }
 
-// ListWithFilter lists templates filtered by tag
 func ListWithFilter(filterTag string) {
 	t := table.NewWriter()
 	t.SetStyle(table.StyleDefault)
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"ID", "Name", "Author", "Technologies", "Tags"})
+	t.AppendHeader(table.Row{"ID", "Name", "Author", "Target", "Type", "Tags"})
 
 	count := 0
-	for id, template := range Templates {
-		if template.ID == "example-template" {
-			continue
-		}
-
-		// Apply tag filter if specified
+	for _, template := range Templates {
 		if filterTag != "" {
 			hasTag := false
 			for _, tag := range template.Info.Tags {
@@ -91,13 +96,14 @@ func ListWithFilter(filterTag string) {
 			}
 		}
 
-		technologies := strings.Join(template.Info.Technologies, ", ")
 		tags := strings.Join(template.Info.Tags, ", ")
+		targets := strings.Join(template.Info.Target, ", ")
 		t.AppendRow(table.Row{
-			id,
+			template.ID,
 			template.Info.Name,
 			template.Info.Author,
-			technologies,
+			targets,
+			template.Info.Type,
 			tags,
 		})
 		count++

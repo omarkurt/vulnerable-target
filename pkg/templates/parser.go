@@ -36,10 +36,6 @@ func LoadTemplate(filepath string) (Template, error) {
 }
 
 func validateTemplate(template Template) error {
-	if template.ID == "example-template" {
-		return nil
-	}
-
 	if template.ID == "" {
 		return fmt.Errorf("template ID is missing")
 	}
