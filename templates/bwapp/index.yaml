@@ -6,15 +6,16 @@ info:
   author: hhsteam
   description: |
     Web application with over 100 vulnerabilities for testing.
-  references:
-    - http://www.itsecgames.com/
-  technologies:
+  target:
     - php
     - mysql
+  type: Lab
   tags:
     - owasp
     - web
     - vulnerabilities
+  references:
+    - http://www.itsecgames.com/
 
 providers:
   docker-compose:

@@ -9,13 +9,12 @@ info:
     It can be used in security trainings, awareness demos, CTFs and as a guinea pig for security tools!
     Juice Shop encompasses vulnerabilities from the entire OWASP Top Ten along with many other security
     flaws found in real-world applications!
-  references:
-    - https://owasp.org/www-project-juice-shop
-  technologies:
+  target:
     - nodejs
     - angular
     - express
     - sqlite
+  type: Lab
   tags:
     - xss
     - injection
@@ -23,8 +22,8 @@ info:
     - sensitive-data
     - xxe
     - security-misconfiguration
-    - web
-    - rest-api
+  references:
+    - https://owasp.org/www-project-juice-shop
 
 
 providers:
