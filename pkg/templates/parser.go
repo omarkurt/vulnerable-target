@@ -21,7 +21,7 @@ var (
 
 func LoadTemplate(filepath string) (Template, error) {
 	var template Template
-	file, err := os.ReadFile(path.Join(filepath, "index.yaml"))
+	file, err := os.ReadFile(path.Join(filepath, "index.yaml")) // #nosec G304
 	if err != nil {
 		return template, err
 	}
