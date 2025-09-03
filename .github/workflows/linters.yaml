@@ -19,15 +19,18 @@ jobs:
         uses: docker/setup-buildx-action@v3
 
       - name: Build Docker image
-        run: docker build -t vulnerable-target .
+        run: |
+          docker build \
+            --target dev-tools \
+            -t vulnerable-target-lint .
 
-      - name: Run make lint in container
+      - name: Run linters
         run: |
           docker run --rm \
             -v $(pwd):/app \
             -w /app \
-            vulnerable-target \
-            make lint
+            vulnerable-target-lint \
+            /bin/bash -c "cd /app && make lint"
 
   hadolint:
     name: Run Hadolint
