@@ -6,7 +6,10 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     git=1:2.30.* \
     make=4.3-4.1 \
-    && rm -rf /var/lib/apt/lists/*
+    python3-pip \
+    python3-setuptools \
+    && rm -rf /var/lib/apt/lists/* && \
+    pip3 install --no-cache-dir pre-commit
 
 # Install Go tools with versions compatible with Go 1.23.12
 RUN go install mvdan.cc/gofumpt@v0.5.0 && \
