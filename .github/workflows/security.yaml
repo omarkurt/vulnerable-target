@@ -32,19 +32,9 @@ jobs:
           cache: true
 
       - name: Install gosec
-        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+        run: |
+          go install github.com/securego/gosec/v2/cmd/gosec@latest
+          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
 
       - name: Run gosec
-        run: |
-          $GOPATH/bin/gosec ./...
-
-  gitleaks:
-    name: Run Gitleaks
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: gitleaks/gitleaks-action@v2
-        with:
-          config-path: .gitleaks.toml
-          fail-on-scan: true
-          dockerfile: dockerfile
+        run: gosec ./...

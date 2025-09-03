@@ -10,12 +10,12 @@ RUN apt-get update && \
 
 WORKDIR /app
 
-# Install Go tools
-RUN go install mvdan.cc/gofumpt@latest && \
-    go install github.com/kisielk/errcheck@latest && \
-    go install github.com/go-delve/delve/cmd/dlv@latest && \
-    go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest \
-    go install github.com/securego/gosec/v2/cmd/gosec@latest
+# Install Go tools with versions compatible with Go 1.23.12
+RUN go install mvdan.cc/gofumpt@v0.5.0 && \
+    go install github.com/kisielk/errcheck@v1.6.3 && \
+    go install github.com/go-delve/delve/cmd/dlv@v1.22.0 && \
+    go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.57.1 && \
+    go install github.com/securego/gosec/v2/cmd/gosec@v2.19.0
 
 
 # Copy go mod and sum files first for better caching
