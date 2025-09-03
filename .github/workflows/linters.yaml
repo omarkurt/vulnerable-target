@@ -22,15 +22,20 @@ jobs:
         run: |
           docker build \
             --target dev-tools \
-            -t vulnerable-target-lint .
+            -t vulnerable-target .
 
       - name: Run linters
         run: |
           docker run --rm \
             -v $(pwd):/app \
             -w /app \
-            vulnerable-target-lint \
-            /bin/bash -c "cd /app && make lint"
+            -e CI=true \
+            vulnerable-target \
+            /bin/bash -c "cd /app && \
+              make gofmt \
+              make golangci \
+              make govet \
+              make goerrcheck
 
   hadolint:
     name: Run Hadolint
