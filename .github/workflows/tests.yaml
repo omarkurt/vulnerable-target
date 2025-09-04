@@ -4,9 +4,6 @@ name: 🔨 Tests
 on:
   push:
     branches: ["dev", "main"]
-    paths:
-      - "**.go"
-      - "**.mod"
     tags:
       - "v*"
   pull_request:
