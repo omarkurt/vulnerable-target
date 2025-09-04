@@ -22,7 +22,7 @@ type Info struct {
 	Name             string   `yaml:"name"`
 	Description      string   `yaml:"description"`
 	Author           string   `yaml:"author"`
-	Target           []string `yaml:"target"`
+	Targets          []string `yaml:"targets"`
 	Type             string   `yaml:"type"`
 	AffectedVersions []string `yaml:"affected_versions"`
 	FixedVersion     string   `yaml:"fixed_version"`
@@ -73,7 +73,7 @@ func ListWithFilter(filterTag string) {
 	t := table.NewWriter()
 	t.SetStyle(table.StyleDefault)
 	t.SetOutputMirror(os.Stdout)
-	t.AppendHeader(table.Row{"ID", "Name", "Author", "Target", "Type", "Tags"})
+	t.AppendHeader(table.Row{"ID", "Name", "Author", "Targets", "Type", "Tags"})
 
 	count := 0
 	for _, template := range Templates {
@@ -91,7 +91,7 @@ func ListWithFilter(filterTag string) {
 		}
 
 		tags := strings.Join(template.Info.Tags, ", ")
-		targets := strings.Join(template.Info.Target, ", ")
+		targets := strings.Join(template.Info.Targets, ", ")
 		t.AppendRow(table.Row{
 			template.ID,
 			template.Info.Name,
