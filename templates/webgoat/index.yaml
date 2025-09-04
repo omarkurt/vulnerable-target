@@ -6,7 +6,7 @@ info:
   author: hhsteam
   description: |
     Server-side flaws and educational lessons in a multi-platform environment.
-  target:
+  targets:
     - java
   type: Lab
   tags:

@@ -6,7 +6,7 @@ info:
   author: hhsteam
   description: |
     Web application with over 100 vulnerabilities for testing.
-  target:
+  targets:
     - php
     - mysql
   type: Lab

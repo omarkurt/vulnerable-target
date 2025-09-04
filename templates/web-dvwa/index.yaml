@@ -8,7 +8,7 @@ info:
   description: |
     The aim of DVWA is to practice some of the most common web vulnerability,
     with various difficultly levels, with a simple straightforward interface.
-  target:
+  targets:
     - mysql
     - php
   type: Lab
