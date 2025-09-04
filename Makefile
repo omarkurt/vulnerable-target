@@ -25,8 +25,6 @@ install-pre-commit-hooks:
 gofmt:
 	@go fmt ./...
 
-	:
-	@gofumpt -l -w .
 
 golangci:
 	@golangci-lint run ./...
