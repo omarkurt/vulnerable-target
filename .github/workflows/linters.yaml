@@ -38,8 +38,29 @@ jobs:
               make govet && \
               make goerrcheck'
 
+  test:
+    name: "Tests"
+    needs: [lint]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
+        with:
+          go-version: '^1.23'
+      - name: Run tests
+        run: |
+          make gofmt
+          make golangci
+          make govet
+          make goerrcheck
+
   hadolint:
     name: Run Hadolint
+    needs: [lint]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
