@@ -3,7 +3,7 @@
 name: 🔨 Tests
 on:
   push:
-    branches: ["dev"]
+    branches: ["dev", "main"]
     paths:
       - "**.go"
       - "**.mod"
