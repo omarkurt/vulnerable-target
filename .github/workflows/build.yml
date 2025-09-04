@@ -27,4 +27,5 @@ jobs:
         with:
           context: .
           push: true
+          target: dev-tools
           tags: ghcr.io/${{ github.repository }}/dev-tools:latest

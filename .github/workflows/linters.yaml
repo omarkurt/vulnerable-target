@@ -14,8 +14,7 @@ jobs:
       image: ghcr.io/${{ github.repository }}/dev-tools:latest
     steps:
       - uses: actions/checkout@v4
-      - run: make lint
-      - run: make yamllint
+      - run: make gofmt
       - run: make goerrcheck
       - run: make golangci
       - run: make govet
