@@ -34,12 +34,12 @@ jobs:
       - uses: golangci/golangci-lint-action@v8
         with:
           version: latest
-          args: --config=.golangci.yml
+          args: --config=.golangci.yaml
 
-      - name: Run yamllint
-        uses: reviewdog/action-yamllint@v1
+      - uses: ibiqlik/action-yamllint@v3
         with:
-          yamllint_flags: "-d relaxed ."
+          file_or_dir: .
+          config_file: .yamllint.yaml
 
       - name: Run go vet
         run: go vet ./...
