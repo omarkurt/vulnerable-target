@@ -9,8 +9,11 @@ on:
 
 jobs:
   build:
-    name: Build Docker image
+    name: Build Docker images
     runs-on: ubuntu-latest
+    permissions:
+      packages: write
+      contents: read
     steps:
       - uses: actions/checkout@v4
 
@@ -42,12 +45,23 @@ jobs:
     needs: build
     container:
       image: ghcr.io/${{ github.repository }}/dev-tools:latest
+    defaults:
+      run:
+        working-directory: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
-      - run: make gofmt
-      - run: make golangci
-      - run: make govet
-      - run: make goerrcheck
+
+      - name: Run gofmt
+        run: make gofmt
+
+      - name: Run golangci-lint
+        run: make golangci
+
+      - name: Run govet
+        run: make govet
+
+      - name: Run errcheck
+        run: make goerrcheck
 
   hadolint:
     name: Run Hadolint
