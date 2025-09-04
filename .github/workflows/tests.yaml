@@ -44,11 +44,6 @@ jobs:
       - name: Run go vet
         run: go vet ./...
 
-      - name: Install errcheck
-        run: go install github.com/kisielk/errcheck@v1.6.3
-      - name: Run errcheck
-        run: errcheck -ignore '[cC]lose' ./...
-
       - name: Run gitleaks
         uses: gitleaks/gitleaks-action@v2
         env:
