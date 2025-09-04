@@ -9,49 +9,15 @@ on:
 
 jobs:
   lint:
-    name: Run Linters
+    name: "Lint"
+    if: "${{ !endsWith(github.actor, '[bot]') }}"
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-
-      - name: Build Docker image
-        run: |
-          docker build \
-            --target dev-tools \
-            -t vulnerable-target .
-
-      - name: Run linters
-        run: |
-          docker run --rm \
-            -v $(pwd):/app \
-            -w /app \
-            -e CI=true \
-            vulnerable-target \
-            /bin/bash -c 'set -euo pipefail
-              cd /app && \
-              make gofmt && \
-              make golangci && \
-              make govet && \
-              make goerrcheck'
-
-  test:
-    name: "Tests"
-    needs: [lint]
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
         with:
           go-version: '^1.23'
-      - name: Run tests
+      - name: Run linters
         run: |
           make gofmt
           make golangci
