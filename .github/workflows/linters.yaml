@@ -17,14 +17,6 @@ jobs:
       - uses: actions/setup-go@v4
         with:
           go-version: '^1.23'
-      - name: Install tools
-        run: |
-          go install mvdan.cc/gofumpt@latest
-          go install github.com/kisielk/errcheck@latest
-          go install golang.org/x/tools/go/analysis/passes/shadow/cmd/shadow@latest
-          go install honnef.co/go/tools/cmd/staticcheck@latest
-          echo "$(go env GOPATH)/bin" >> $GITHUB_PATH
-
       - name: Run linters
         run: |
           make gofmt
