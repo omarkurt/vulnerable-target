@@ -1,28 +1,22 @@
 ---
-name: Lint
+name: CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
 
 jobs:
   lint:
-    name: "Lint"
-    if: "${{ !endsWith(github.actor, '[bot]') }}"
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/${{ github.repository }}/dev-tools:latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v4
-        with:
-          go-version: '^1.23'
-      - name: Run linters
-        run: |
-          make gofmt
-          make golangci
-          make govet
-          make goerrcheck
+      - run: make lint
+      - run: make yamllint
+      - run: make goerrcheck
+      - run: make golangci
+      - run: make govet
 
   hadolint:
     name: Run Hadolint
