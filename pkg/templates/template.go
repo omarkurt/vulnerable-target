@@ -39,6 +39,7 @@ type ProviderConfig struct {
 	Path string `yaml:"path"`
 }
 
+// Templates contains all loaded templates indexed by their ID.
 type Cvss struct {
 	Score   string `yaml:"score"`
 	Metrics string `yaml:"metrics"`
