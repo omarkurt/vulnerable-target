@@ -1,10 +1,9 @@
 ---
-
 version: "2"
 
 run:
-  tests: true           # include *_test.go
-  timeout: 5m           # optional timeout
+  tests: true
+  timeout: 5m
   modules-download-mode: readonly
 
 linters:
@@ -22,34 +21,6 @@ linters:
       excludes:
         - G306
 
-exclusions:
-  generated: lax
-  presets:
-    - comments
-    - common-false-positives
-    - legacy
-    - std-error-handling
-  rules:
-    - linters:
-        - gosec
-      path: _test\.go
-  paths:
-    - .*\.pb\.go$
-    - .*\.gen\.go$
-    - ../../go/pkg/mod
-    - third_party
-    - builtin
-    - examples
-
 formatters:
   enable:
     - gofmt
-  exclusions:
-    generated: lax
-    paths:
-      - .*\.pb\.go$
-      - .*\.gen\.go$
-      - ../../go/pkg/mod
-      - third_party
-      - builtin
-      - examples
