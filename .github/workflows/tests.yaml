@@ -33,6 +33,7 @@ jobs:
 
       - uses: golangci/golangci-lint-action@v6
         with:
+          install-mode: binary
           version: v1.57.1
           args: --config=.golangci.yaml
 
