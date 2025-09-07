@@ -39,7 +39,7 @@ type ProviderConfig struct {
 	Path string `yaml:"path"`
 }
 
-// Templates contains all loaded templates indexed by their ID.
+// Cvss represents Common Vulnerability Scoring System information.
 type Cvss struct {
 	Score   string `yaml:"score"`
 	Metrics string `yaml:"metrics"`
@@ -76,6 +76,7 @@ func List() {
 	ListWithFilter("")
 }
 
+// ListWithFilter displays all available templates in a table format, optionally filtered by tag.
 func ListWithFilter(filterTag string) {
 	t := table.NewWriter()
 	t.SetStyle(table.StyleDefault)

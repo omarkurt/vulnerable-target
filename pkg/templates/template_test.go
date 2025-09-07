@@ -14,10 +14,6 @@ func TestGetByID(t *testing.T) {
 			Info: Info{
 				Name:   "example-template-name",
 				Author: "example-template-author",
-				Technologies: []string{
-					"Go",
-					"YAML",
-				},
 				Tags: []string{
 					"test",
 					"example",
