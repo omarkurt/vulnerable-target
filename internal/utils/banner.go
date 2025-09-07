@@ -1,3 +1,4 @@
+// Package banner provides ASCII art banner and colorful text utilities for the vulnerable target application.
 package banner
 
 import (
@@ -8,10 +9,13 @@ import (
 )
 
 const (
-	AppName    = "vt"
+	// AppName is the application name.
+	AppName = "vt"
+	// AppVersion is the application version.
 	AppVersion = "v0.0.1"
 )
 
+// Quote represents a motivational quote with its author.
 type Quote struct {
 	Text   string
 	Author string
@@ -37,6 +41,7 @@ var rainbowColors = []string{
 	"\033[35m", // Magenta
 }
 
+// RainbowText applies rainbow colors to the input text.
 func RainbowText(text string) string {
 	runes := []rune(text)
 	var b strings.Builder
@@ -60,6 +65,7 @@ func randomQuote() string {
 	return fmt.Sprintf("%s — %s", q.Text, q.Author)
 }
 
+// Banner returns the ASCII art banner with application information.
 func Banner() string {
 	title := RainbowText("Next-generation vuln-focused testing platform")
 	quote := randomQuote()
@@ -75,6 +81,7 @@ func Banner() string {
 `, title, quote, AppVersion, strings.Repeat("-", 72))
 }
 
+// Print displays the banner to stdout.
 func Print() {
 	fmt.Print(Banner())
 }

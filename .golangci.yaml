@@ -1,10 +1,19 @@
 ---
 
 version: "2"
+
+run:
+  tests: true           # include *_test.go
+  timeout: 5m           # optional timeout
+  modules-download-mode: readonly
+
 linters:
   enable:
     - gosec
     - revive
+    - errcheck
+    - govet
+
   settings:
     errcheck:
       check-type-assertions: true
@@ -12,24 +21,26 @@ linters:
     gosec:
       excludes:
         - G306
-  exclusions:
-    generated: lax
-    presets:
-      - comments
-      - common-false-positives
-      - legacy
-      - std-error-handling
-    rules:
-      - linters:
-          - gosec
-        path: _test\.go
-    paths:
-      - .*\.pb\.go$
-      - .*\.gen\.go$
-      - ../../go/pkg/mod
-      - third_party$
-      - builtin$
-      - examples$
+
+exclusions:
+  generated: lax
+  presets:
+    - comments
+    - common-false-positives
+    - legacy
+    - std-error-handling
+  rules:
+    - linters:
+        - gosec
+      path: _test\.go
+  paths:
+    - .*\.pb\.go$
+    - .*\.gen\.go$
+    - ../../go/pkg/mod
+    - third_party
+    - builtin
+    - examples
+
 formatters:
   enable:
     - gofmt
@@ -39,6 +50,6 @@ formatters:
       - .*\.pb\.go$
       - .*\.gen\.go$
       - ../../go/pkg/mod
-      - third_party$
-      - builtin$
-      - examples$
+      - third_party
+      - builtin
+      - examples

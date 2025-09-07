@@ -1,3 +1,4 @@
+// Package templates provides template parsing and validation functionality.
 package templates
 
 import (
@@ -19,6 +20,7 @@ var (
 	}
 )
 
+// LoadTemplate loads and validates a template from the specified filepath.
 func LoadTemplate(filepath string) (Template, error) {
 	var template Template
 	file, err := os.ReadFile(path.Join(filepath, "index.yaml")) // #nosec G304

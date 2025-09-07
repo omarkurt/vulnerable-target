@@ -1,3 +1,4 @@
+// Package file provides file system utilities for the vulnerable target application.
 package file
 
 import (
@@ -6,6 +7,7 @@ import (
 	"path/filepath"
 )
 
+// CreateTempFile creates a temporary file with the given content and name in a secure temp directory.
 func CreateTempFile(content string, name string) (string, error) {
 	tempDir := filepath.Join(os.TempDir(), "vt-folder")
 
@@ -24,6 +26,7 @@ func CreateTempFile(content string, name string) (string, error) {
 	return filePath, nil
 }
 
+// DeleteFile removes the file or directory at the specified path.
 func DeleteFile(path string) error {
 	return os.RemoveAll(path)
 }

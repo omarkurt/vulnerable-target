@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
+// LogLevels defines the valid log levels supported by the application.
 var LogLevels = map[string]bool{
 	zerolog.DebugLevel.String(): true,
 	zerolog.InfoLevel.String():  true,
@@ -46,6 +47,7 @@ var rootCmd = &cobra.Command{
 	SilenceErrors: true,
 }
 
+// Run executes the root command and handles the application lifecycle.
 func Run() {
 	originalHelp := rootCmd.HelpFunc()
 	rootCmd.SetHelpFunc(func(c *cobra.Command, s []string) {
