@@ -27,7 +27,7 @@ gofmt:
 
 
 golangci:
-	@golangci-lint run ./...
+	@golangci-lint run --config=.golangci.yaml ./...
 
 yamllint:
 	@pre-commit run yamllint --all-files
