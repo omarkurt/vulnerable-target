@@ -1,3 +1,4 @@
+// Package cli provides command-line interface functionality for the vulnerable target application.
 package cli
 
 import (
@@ -5,9 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-	filterTag string
-)
+var filterTag string
 
 var listCmd = &cobra.Command{
 	Use:   "list",

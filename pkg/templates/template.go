@@ -10,6 +10,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Template represents a vulnerable target environment configuration.
 type Template struct {
 	ID             string                    `yaml:"id"`
 	Info           Info                      `yaml:"info"`
@@ -18,6 +19,7 @@ type Template struct {
 	Providers      map[string]ProviderConfig `yaml:"providers"`
 }
 
+// Info contains metadata about a template.
 type Info struct {
 	Name             string   `yaml:"name"`
 	Description      string   `yaml:"description"`
@@ -32,17 +34,21 @@ type Info struct {
 	References       []string `yaml:"references"`
 }
 
+// ProviderConfig contains configuration for a specific provider.
 type ProviderConfig struct {
 	Path string `yaml:"path"`
 }
 
+// Cvss represents Common Vulnerability Scoring System information.
 type Cvss struct {
 	Score   string `yaml:"score"`
 	Metrics string `yaml:"metrics"`
 }
 
+// Templates contains all loaded templates indexed by their ID.
 var Templates = make(map[string]Template)
 
+// Init loads all templates from the templates directory.
 func Init() {
 	wd, err := os.Getwd()
 	if err != nil {
@@ -65,10 +71,12 @@ func Init() {
 	}
 }
 
+// List displays all available templates in a table format.
 func List() {
 	ListWithFilter("")
 }
 
+// ListWithFilter displays all available templates in a table format, optionally filtered by tag.
 func ListWithFilter(filterTag string) {
 	t := table.NewWriter()
 	t.SetStyle(table.StyleDefault)
@@ -121,6 +129,7 @@ func ListWithFilter(filterTag string) {
 	t.Render()
 }
 
+// GetByID retrieves a template by its ID.
 func GetByID(templateID string) (*Template, error) {
 	template := Templates[templateID]
 	if template.ID == "" {

@@ -15,6 +15,7 @@ var (
 	}
 )
 
+// Validate validates the template structure and content.
 func (template Template) Validate() error {
 	if template.ID == "" {
 		return fmt.Errorf("id can not be empty")
@@ -43,6 +44,7 @@ func (template Template) Validate() error {
 	return nil
 }
 
+// Validate validates the info structure and content.
 func (info Info) Validate(templateID string) error {
 	if info.Name == "" {
 		return fmt.Errorf("template '%s': name can not be empty", templateID)
@@ -62,6 +64,7 @@ func (info Info) Validate(templateID string) error {
 	return nil
 }
 
+// Validate validates the provider configuration structure and content.
 func (pc ProviderConfig) Validate(templateID, name string) error {
 	providerPath := pc.Path
 	if providerPath == "" {

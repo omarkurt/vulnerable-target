@@ -1,3 +1,4 @@
+// Package logger provides logging functionality for the vulnerable target application.
 package logger
 
 import (
@@ -8,6 +9,7 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// InitWithLevel initializes the logger with the specified verbosity level.
 func InitWithLevel(verbosityLevel string) {
 	level, err := zerolog.ParseLevel(verbosityLevel)
 	if err != nil {
@@ -28,6 +30,7 @@ func InitWithLevel(verbosityLevel string) {
 		Logger()
 }
 
+// Init initializes the logger with the default info level.
 func Init() {
 	InitWithLevel("info")
 }
