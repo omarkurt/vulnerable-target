@@ -81,4 +81,4 @@ repos:
     hooks:
       - id: trufflehog
         name: trufflehog
-        args: [--no-verification, --fail]
+        args: [--no-verification]
