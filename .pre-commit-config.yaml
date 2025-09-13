@@ -76,8 +76,9 @@ repos:
         name: hadolint
         args: [--failure-threshold=error]
 
-  - repo: https://github.com/gitleaks/gitleaks
-    rev: v8.28.0
+  - repo: https://github.com/trufflesecurity/trufflehog
+    rev: v3.87.0
     hooks:
-      - id: gitleaks
-        name: gitleaks
+      - id: trufflehog
+        name: trufflehog
+        args: [--no-verification, --fail]
