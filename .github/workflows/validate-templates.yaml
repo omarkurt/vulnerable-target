@@ -10,12 +10,12 @@ on:
     paths:
       - 'templates/**'
       - 'pkg/templates/**'
-      - '.github/workflows/validate-templates.yml'
+      - '.github/workflows/validate-templates.yaml'
   pull_request:
     paths:
       - 'templates/**'
       - 'pkg/templates/**'
-      - '.github/workflows/validate-templates.yml'
+      - '.github/workflows/validate-templates.yaml'
   workflow_dispatch:
 
 jobs:
