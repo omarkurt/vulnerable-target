@@ -31,7 +31,6 @@ func setupRootFlags() {
 			strings.Join(slices.Collect(maps.Keys(LogLevels)), ", ")))
 }
 
-
 var rootCmd = &cobra.Command{
 	Use:     "vt",
 	Short:   "Create vulnerable environment",
@@ -53,7 +52,7 @@ var rootCmd = &cobra.Command{
 func InitCLI() {
 	// Setup root command flags
 	setupRootFlags()
-	
+
 	// Register all subcommands
 	registerCommands()
 }
@@ -65,7 +64,7 @@ func registerCommands() {
 	rootCmd.AddCommand(startCmd)
 	rootCmd.AddCommand(stopCmd)
 	rootCmd.AddCommand(validateCmd)
-	
+
 	// Setup command-specific flags
 	setupListCommand()
 	setupStartCommand()
@@ -77,7 +76,7 @@ func registerCommands() {
 func Run() {
 	// Initialize CLI before running
 	InitCLI()
-	
+
 	originalHelp := rootCmd.HelpFunc()
 	rootCmd.SetHelpFunc(func(c *cobra.Command, s []string) {
 		banner.Print()

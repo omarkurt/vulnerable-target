@@ -11,7 +11,7 @@ func main() {
 	// Initialize logger and templates explicitly
 	logger.Init()
 	templates.Init()
-	
+
 	// Run the CLI
 	cli.Run()
 }
