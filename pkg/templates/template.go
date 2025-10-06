@@ -17,6 +17,7 @@ type Template struct {
 	ProofOfConcept map[string][]string       `yaml:"poc"`
 	Remediation    []string                  `yaml:"remediation"`
 	Providers      map[string]ProviderConfig `yaml:"providers"`
+	PostInstall    []string                `yaml:"post-install"`
 }
 
 // Info contains metadata about a template.
@@ -62,7 +63,7 @@ func Init() {
 	for _, entry := range dirEntry {
 		template, err := LoadTemplate(filepath.Join(home, entry.Name()))
 		if err != nil {
-			log.Fatal().Msgf("%v", err)
+			log.Fatal().Msgf("Error loading template %s: %v", entry.Name(), err)
 		}
 		if template.ID != entry.Name() {
 			log.Fatal().Msgf("id and directory name should match")
