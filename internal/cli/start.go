@@ -48,6 +48,14 @@ var startCmd = &cobra.Command{
 			log.Fatal().Msgf("%v", err)
 		}
 
+		if len(template.PostInstall) > 0 {
+
+			log.Info().Msg("Post-installation instructions:")
+			for _, instruction := range template.PostInstall {
+				fmt.Printf("  %s\n", instruction)
+			}
+		}
+
 		log.Info().Msgf("%s template is running on %s", templateID, providerName)
 	},
 }
