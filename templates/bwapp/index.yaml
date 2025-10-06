@@ -21,10 +21,11 @@ providers:
   docker-compose:
     path: "docker-compose.yaml"
 
-post-install: 
+post-install:
   - "Go to http://localhost/install.php"
   - "You should see 'Click here to install bWAPP.'."
   - "Click the link to complete the installation."
   - "bWAPP has been installed successfully!"
   - "Set the security level to 'low' for testing."
-  - "credentials: bug/bee" # default credentials
+  - "credentials: bug/bee"
+  - "Enjoy hacking!"
