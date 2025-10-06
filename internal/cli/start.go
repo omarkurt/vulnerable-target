@@ -8,7 +8,7 @@ import (
 
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider/registry"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
-  	"github.com/rs/zerolog/log"
+	"github.com/rs/zerolog/log"
 	"github.com/spf13/cobra"
 )
 
@@ -42,20 +42,19 @@ var startCmd = &cobra.Command{
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
 		}
- 
+
 		err = provider.Start(template)
 		if err != nil {
 			log.Fatal().Msgf("%v", err)
 		}
 
 		if len(template.PostInstall) > 0 {
-			
+
 			log.Info().Msg("Post-installation instructions:")
-  			for _, instruction := range template.PostInstall {
+			for _, instruction := range template.PostInstall {
 				fmt.Printf("  %s\n", instruction)
 			}
- 		}
-
+		}
 
 		log.Info().Msgf("%s template is running on %s", templateID, providerName)
 	},

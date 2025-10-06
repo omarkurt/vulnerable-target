@@ -17,7 +17,7 @@ type Template struct {
 	ProofOfConcept map[string][]string       `yaml:"poc"`
 	Remediation    []string                  `yaml:"remediation"`
 	Providers      map[string]ProviderConfig `yaml:"providers"`
-	PostInstall    []string                `yaml:"post-install"`
+	PostInstall    []string                  `yaml:"post-install"`
 }
 
 // Info contains metadata about a template.
