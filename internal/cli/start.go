@@ -48,13 +48,20 @@ var startCmd = &cobra.Command{
 			log.Fatal().Msgf("%v", err)
 		}
 
+		if len(template.PostInstall) > 0 {
+
+			log.Info().Msg("Post-installation instructions:")
+			for _, instruction := range template.PostInstall {
+				fmt.Printf("  %s\n", instruction)
+			}
+		}
+
 		log.Info().Msgf("%s template is running on %s", templateID, providerName)
 	},
 }
 
-func init() {
-	rootCmd.AddCommand(startCmd)
-
+// setupStartCommand configures the start command flags
+func setupStartCommand() {
 	startCmd.Flags().StringP("provider", "p", "docker-compose",
 		fmt.Sprintf("Specify the provider for building a vulnerable environment (%s)",
 			strings.Join(slices.Collect(maps.Keys(registry.Providers)), ", ")))
