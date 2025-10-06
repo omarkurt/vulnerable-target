@@ -22,7 +22,7 @@ type Quote struct {
 }
 
 var quotesList = []Quote{
-	{Text: "\033[1;3mPirêze Hayat, Doxrî Yașanmaz.\033[0m", Author: "Pișo Meheme"}, // "Life without bugs is not worth living."
+	{Text: "\033[1;3mPirêze Hayat, Doxrî Yașanmaz.\033[0m", Author: "Pișo Meheme"}, 
 	{Text: "\033[1;3mTalk is cheap. Show me the code.\033[0m", Author: "Linus Torvalds"},
 	{Text: "\033[1;3mGiven enough eyeballs, all bugs are shallow.\033[0m", Author: "Eric S. Raymond"},
 	{Text: "\033[1;3mThe quieter you become, the more you are able to hear.\033[0m", Author: "Anonymous"},
