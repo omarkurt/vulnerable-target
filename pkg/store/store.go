@@ -4,9 +4,7 @@ package store
 import (
 	"errors"
 
-	"github.com/happyhackingspace/vulnerable-target/pkg/store/config"
 	"github.com/happyhackingspace/vulnerable-target/pkg/store/disk"
-	"github.com/happyhackingspace/vulnerable-target/pkg/store/storable"
 )
 
 // Type represents the type of storage backend
@@ -18,7 +16,7 @@ const (
 )
 
 // Storage provides generic storage operations for storable objects
-type Storage[T storable.Interface] interface {
+type Storage[T any] interface {
 	Set(string, T) error
 	Get(string) (T, error)
 	GetAll() ([]T, error)
@@ -27,13 +25,14 @@ type Storage[T storable.Interface] interface {
 }
 
 // NewStorage creates a new storage instance based on the specified store type and configuration
-func NewStorage[T storable.Interface](storeType Type, config config.Interface) (Storage[T], error) {
+func NewStorage[T any](storeType Type, config any) (Storage[T], error) {
 	switch storeType {
 	case DiskStoreType:
-		if diskConfig, ok := config.(disk.Config); ok {
-			return disk.NewStorageStore[T](diskConfig)
+		cfg, ok := config.(*disk.Config)
+		if !ok {
+			return nil, errors.New("invalid config type for disk store")
 		}
-		return nil, errors.New("invalid config type for disk store")
+		return disk.NewStorageStore[T](cfg)
 	default:
 		return nil, errors.New("invalid store type")
 	}

@@ -6,6 +6,7 @@ import (
 
 	"github.com/happyhackingspace/vulnerable-target/internal/state"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider"
+	"github.com/happyhackingspace/vulnerable-target/pkg/store/disk"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 )
 
@@ -21,7 +22,8 @@ func (d *DockerCompose) Name() string {
 
 // Start launches the vulnerable target environment using Docker Compose.
 func (d *DockerCompose) Start(template *templates.Template) error {
-	st, err := state.NewManager()
+	cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+	st, err := state.NewManager(cfg)
 	if err != nil {
 		return err
 	}
@@ -56,7 +58,8 @@ func (d *DockerCompose) Start(template *templates.Template) error {
 
 // Stop shuts down the vulnerable target environment using Docker Compose.
 func (d *DockerCompose) Stop(template *templates.Template) error {
-	st, err := state.NewManager()
+	cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+	st, err := state.NewManager(cfg)
 	if err != nil {
 		return err
 	}

@@ -7,16 +7,12 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/happyhackingspace/vulnerable-target/pkg/store/storable"
 	bolt "go.etcd.io/bbolt"
 )
 
-// DefaultBucket is the default bucket name used when none is specified
-const DefaultBucket = "default"
-
 // Store provides disk-based storage using BoltDB for storable objects
-type Store[T storable.Interface] struct {
-	Config Config
+type Store[T any] struct {
+	Config *Config
 	db     *bolt.DB
 }
 
@@ -105,7 +101,7 @@ func (s *Store[T]) Close() error {
 }
 
 // NewStorageStore creates a new disk-based storage instance with the given configuration
-func NewStorageStore[T storable.Interface](config Config) (*Store[T], error) {
+func NewStorageStore[T any](config *Config) (*Store[T], error) {
 	userHomeDir, err := os.UserHomeDir()
 	if err != nil {
 		return nil, err

@@ -6,6 +6,7 @@ import (
 
 	"github.com/happyhackingspace/vulnerable-target/internal/state"
 	"github.com/happyhackingspace/vulnerable-target/pkg/provider/registry"
+	"github.com/happyhackingspace/vulnerable-target/pkg/store/disk"
 	"github.com/happyhackingspace/vulnerable-target/pkg/templates"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/rs/zerolog/log"
@@ -14,17 +15,19 @@ import (
 
 var psCmd = &cobra.Command{
 	Use:   "ps",
-	Short: "Runs selected template on chosen provider",
+	Short: "List running deployments and their status",
 	Run: func(_ *cobra.Command, _ []string) {
-		st, err := state.NewManager()
+		cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+		st, err := state.NewManager(cfg)
 		if err != nil {
 			log.Error().Msgf("%v", err)
-
+			return
 		}
 
 		deployments, err := st.ListDeployments()
 		if err != nil {
 			log.Error().Msgf("%v", err)
+			return
 		}
 
 		t := table.NewWriter()
@@ -35,14 +38,21 @@ var psCmd = &cobra.Command{
 		count := 0
 		for _, deployment := range deployments {
 			provider := registry.GetProvider(deployment.ProviderName)
+			if provider == nil {
+				log.Error().Msgf("provider %q not found", deployment.ProviderName)
+				continue
+			}
 			template, err := templates.GetByID(deployment.TemplateID)
 			if err != nil {
 				log.Error().Msgf("%v", err)
+				continue
 			}
 
-			status, err := provider.Status(template)
-			if err != nil {
+			status := "unknown"
+			if s, err := provider.Status(template); err != nil {
 				log.Error().Msgf("%v", err)
+			} else {
+				status = s
 			}
 
 			t.AppendRow(table.Row{
@@ -62,8 +72,4 @@ var psCmd = &cobra.Command{
 		t.Render()
 
 	},
-}
-
-func init() {
-	rootCmd.AddCommand(psCmd)
 }
