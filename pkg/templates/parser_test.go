@@ -37,7 +37,7 @@ providers:
 	// create temp dir
 	tempDir := filepath.Join(t.TempDir(), "example-template")
 
-	err := os.Mkdir(tempDir, 0755)
+	err := os.Mkdir(tempDir, 0750)
 	assert.NoError(t, err)
 
 	err = os.WriteFile(filepath.Join(tempDir, "index.yaml"), []byte(templateContent), 0644)
