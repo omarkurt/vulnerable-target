@@ -1,4 +1,10 @@
 # Vulnerable Target
+
+
+<img width="530" height="137" alt="image" src="https://github.com/user-attachments/assets/5601f3a8-7037-4fe5-8115-eb4182d8ab2e" />
+
+
+
 Vulnerable Target (VT) is a specialized tool designed for security professionals, researchers, and educators that creates intentionally vulnerable environments across multiple platforms.
 
 > [!CAUTION]
