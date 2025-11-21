@@ -2,9 +2,9 @@ rules:
   - id: sickchill-cve-2024-53995-open-redirect
     mode: search
     message: >-
-      SickChill Open Redirect vulnerability detected. An attacker can redirect a 
+      SickChill Open Redirect vulnerability detected. An attacker can redirect a
       user to a malicious site via the 'next' parameter in the login page.
-      
+
       This issue is tracked as CVE-2024-53995.
     languages:
       - python

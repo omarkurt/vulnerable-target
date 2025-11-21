@@ -1,5 +1,3 @@
----
-
 services:
   web:
     image: ghcr.io/happyhackingspace/bwapp
