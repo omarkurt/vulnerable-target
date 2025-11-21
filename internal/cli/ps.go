@@ -17,7 +17,7 @@ var psCmd = &cobra.Command{
 	Use:   "ps",
 	Short: "List running deployments and their status",
 	Run: func(_ *cobra.Command, _ []string) {
-		cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+		cfg := disk.NewConfig().WithFileName("deployments.db").WithBucketName("deployments")
 		st, err := state.NewManager(cfg)
 		if err != nil {
 			log.Error().Msgf("%v", err)

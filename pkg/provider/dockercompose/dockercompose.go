@@ -22,7 +22,7 @@ func (d *DockerCompose) Name() string {
 
 // Start launches the vulnerable target environment using Docker Compose.
 func (d *DockerCompose) Start(template *templates.Template) error {
-	cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+	cfg := disk.NewConfig().WithFileName("deployments.db").WithBucketName("deployments")
 	st, err := state.NewManager(cfg)
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func (d *DockerCompose) Start(template *templates.Template) error {
 
 // Stop shuts down the vulnerable target environment using Docker Compose.
 func (d *DockerCompose) Stop(template *templates.Template) error {
-	cfg := disk.NewConfig().WithFileName("osman").WithBucketName("osman")
+	cfg := disk.NewConfig().WithFileName("deployments.db").WithBucketName("deployments")
 	st, err := state.NewManager(cfg)
 	if err != nil {
 		return err
