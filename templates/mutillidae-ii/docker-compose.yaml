@@ -1,5 +1,3 @@
----
-
 services:
   database:
     image: ghcr.io/happyhackingspace/mutillidae-database:latest
