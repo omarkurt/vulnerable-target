@@ -18,6 +18,7 @@ info:
     - cve
     - sqli-like
   references:
+    - https://cve.org/CVE-2025-64459
     - https://shivasurya.me/security/django/2025/11/07/django-sql-injection-CVE-2025-64459.html
     - https://vulnerabletarget.com/VT-2025-64459
 
