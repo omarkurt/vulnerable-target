@@ -1,5 +1,3 @@
----
-
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
@@ -81,6 +79,6 @@ repos:
       - id: trufflehog
         name: TruffleHog
         description: Detect secrets in your data.
-        entry: bash -c 'trufflehog git file://. --since-commit HEAD --results=verified,unknown --fail --no-update'
+        entry: bash -c 'trufflehog git file://. --since-commit HEAD --no-update --results=verified,unknown --fail'
         language: system
         stages: ["pre-commit", "pre-push"]
